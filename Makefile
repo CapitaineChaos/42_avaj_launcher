@@ -14,5 +14,11 @@ install_jdk:
 	@echo "java  = $$($(JAVA) --version | head -n1)"
 	@echo "javac = $$($(JAVAC) --version | head -n1)"
 
+compile:
+	@find * -name "*.java" > sources.txt
+	@$(JAVAC) @sources.txt
+
+run:
+	@$(JAVA) -cp  project app.HelloWorld
 
 .PHONY: install_jdk
