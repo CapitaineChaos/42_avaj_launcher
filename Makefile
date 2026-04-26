@@ -19,6 +19,10 @@ compile:
 	@$(JAVAC) @sources.txt
 
 run:
-	@$(JAVA) -cp  project app.HelloWorld
+	@$(JAVA) app.simulator.Scenario
 
-.PHONY: install_jdk
+clean:
+	@find . -name "*.class" -delete
+	@rm -f sources.txt
+
+.PHONY: install_jdk compile run clean
