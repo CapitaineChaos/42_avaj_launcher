@@ -5,6 +5,8 @@ JAVAC   := $(JDK_DIR)/bin/javac
 export JAVA_HOME := $(JDK_DIR)
 export PATH := $(JDK_DIR)/bin:$(PATH)
 
+all: install_jdk compile run
+
 install_jdk:
 	@if [ ! -x "$(JAVA)" ] || [ ! -x "$(JAVAC)" ]; then \
 		echo "Installing OpenJDK into $(JDK_DIR)..."; \
