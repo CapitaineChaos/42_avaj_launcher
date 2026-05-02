@@ -1,5 +1,7 @@
 package app.aircraft;
 
+import app.coordinates.Coordinates;
+
 public class AircraftFactory {
     private static AircraftFactory instance;
 
@@ -10,16 +12,15 @@ public class AircraftFactory {
         return instance;
     }
 
-    private AircraftFactory() {
-    }
+    private AircraftFactory() {}
 
-    public static String newAircraft(String type, String name, String coordinates) {
-        if (type.equalsIgnoreCase("Helicopter")) {
-            return "Helicopter " + name + " created with coordinates: " + coordinates;
-        } else if (type.equalsIgnoreCase("JetPlane")) {
-            return "JetPlane " + name + " created with coordinates: " + coordinates;
-        } else if (type.equalsIgnoreCase("Baloon")) {
-            return "Baloon " + name + " created with coordinates: " + coordinates;
+    public static String newAircraft(String p_type, String p_name, Coordinates p_coordinates) {
+        if (p_type.equalsIgnoreCase("Helicopter")) {
+            return "Helicopter " + p_name + " created with coordinates: " + p_coordinates;
+        } else if (p_type.equalsIgnoreCase("JetPlane")) {
+            return "JetPlane " + p_name + " created with coordinates: " + p_coordinates;
+        } else if (p_type.equalsIgnoreCase("Baloon")) {
+            return "Baloon " + p_name + " created with coordinates: " + p_coordinates;
         }
         return null;
     }

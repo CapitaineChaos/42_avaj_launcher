@@ -1,35 +1,37 @@
 package app.aircraft;
 
-public class Aircraft extends Flyable implements Runnable {
-    private String name;
-    private String type;
-    private String coordinates;
+import app.coordinates.Coordinates;
 
-    public Aircraft(String name, String type, String coordinates) {
-        this.name = name;
-        this.type = type;
-        this.coordinates = coordinates;
+public class Aircraft extends Flyable implements Runnable {
+    protected String name;
+    protected long id;
+    protected Coordinates coordinates;
+
+    protected Aircraft(long p_id, String p_name, Coordinates p_coordinates) {
+        this.name = p_name;
+        this.id = p_id;
+        this.coordinates = p_coordinates;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getType() {
-        return type;
+    public long getId() {
+        return id;
     }
 
-    public String getCoordinates() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
     @Override
     public void updateConditions() {
-        System.out.println(type + " " + name + " is updating conditions based on weather.");
+        System.out.println(id + " " + name + " is updating conditions based on weather.");
     }
 
     @Override
     public void run() {
-        System.out.println(type + " " + name + " is flying at coordinates: " + coordinates);
+        System.out.println(id + " " + name + " is flying at coordinates: " + coordinates);
     }
 }
