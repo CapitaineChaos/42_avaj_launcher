@@ -1,27 +1,34 @@
 package app.aircraft;
 
 import app.coordinates.Coordinates;
+import app.aircraft.aircrafts.*;
+import app.exceptions.UnknownAircraftException;
+
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AircraftFactory {
     private static AircraftFactory instance;
+    private static final String AIRCRAFT_PACKAGE = "app.aircraft.aircrafts.";
+    private long idCounter = 0;
 
     public static AircraftFactory getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new AircraftFactory();
-        }
         return instance;
     }
 
     private AircraftFactory() {}
 
-    public static String newAircraft(String p_type, String p_name, Coordinates p_coordinates) {
-        if (p_type.equalsIgnoreCase("Helicopter")) {
-            return "Helicopter " + p_name + " created with coordinates: " + p_coordinates;
-        } else if (p_type.equalsIgnoreCase("JetPlane")) {
-            return "JetPlane " + p_name + " created with coordinates: " + p_coordinates;
-        } else if (p_type.equalsIgnoreCase("Baloon")) {
-            return "Baloon " + p_name + " created with coordinates: " + p_coordinates;
+    public Aircraft newAircraft(String p_type, String p_name, Coordinates p_coordinates) throws Exception {
+        Class<?> rawClass = Class.forName(AIRCRAFT_PACKAGE + p_type);
+        if (!Aircraft.class.isAssignableFrom(rawClass)) {
+            throw new UnknownAircraftException("Unknown aircraft type: " + p_type);
         }
-        return null;
+
+        Class<? extends Aircraft> aircraftClass = rawClass.asSubclass(Aircraft.class);
+        Constructor<? extends Aircraft> ctor = aircraftClass.getConstructor(long.class, String.class, Coordinates.class);
+        return ctor.newInstance(++idCounter, p_name, p_coordinates);
     }
 }

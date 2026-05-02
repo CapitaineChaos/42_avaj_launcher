@@ -11,6 +11,7 @@ public class Aircraft extends Flyable implements Runnable {
         this.name = p_name;
         this.id = p_id;
         this.coordinates = p_coordinates;
+        System.out.println("Aircraft " + name + " created with coordinates: " + coordinates);
     }
 
     public String getName() {
