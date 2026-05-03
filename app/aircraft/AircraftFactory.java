@@ -2,7 +2,6 @@ package app.aircraft;
 
 import app.coordinates.Coordinates;
 import app.aircraft.aircrafts.*;
-import app.exceptions.UnknownAircraftException;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -24,7 +23,7 @@ public class AircraftFactory {
     public Aircraft newAircraft(String p_type, String p_name, Coordinates p_coordinates) throws Exception {
         Class<?> rawClass = Class.forName(AIRCRAFT_PACKAGE + p_type);
         if (!Aircraft.class.isAssignableFrom(rawClass)) {
-            throw new UnknownAircraftException("Unknown aircraft type: " + p_type);
+            throw new AircraftUnknownException("Unknown aircraft type: " + p_type);
         }
 
         Class<? extends Aircraft> aircraftClass = rawClass.asSubclass(Aircraft.class);
