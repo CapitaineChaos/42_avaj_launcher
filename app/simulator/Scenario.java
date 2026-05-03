@@ -30,6 +30,12 @@ public class Scenario {
                 Aircraft newAircraft = factory.newAircraft(aircraft.type(), aircraft.name(), Coordinates.createCoordinates(aircraft.longitude(), aircraft.latitude(), aircraft.height()));
                 newAircraft.registerTower(weatherTower);
             }
+
+            for (int i = 0; i < simulations; i++) {
+                System.out.println("---------------- Simulation step " + (i + 1) + " ----------------");
+                weatherTower.changeWeather();
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());   
         }

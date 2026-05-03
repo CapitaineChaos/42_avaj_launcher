@@ -30,8 +30,6 @@ public class Tower {
 
     protected void conditionsChanged() {
         for (Flyable flyable : observers) {
-            if (!observers.contains(flyable))
-                throw new TowerHasNotRegisteredException("Aircraft is not registered to the tower.");
             flyable.updateConditions();
         }
     }

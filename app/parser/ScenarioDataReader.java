@@ -64,6 +64,8 @@ public class ScenarioDataReader {
                 height = Integer.parseInt(parts[4]);
                 if (longitude < 0 || latitude < 0 || height < 0)
                     throw new ScenarioDataReaderException("Coordinates cannot be negative at line " + (i + 1) + ": " + line);
+                if (height > 100)
+                    throw new ScenarioDataReaderException("Height cannot exceed 100 at line " + (i + 1) + ": " + line);
             } catch (NumberFormatException e) {
                 throw new ScenarioDataReaderException("Invalid coordinates format at line " + (i + 1) + ": " + line);
             }

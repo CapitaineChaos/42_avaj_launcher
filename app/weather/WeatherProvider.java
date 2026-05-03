@@ -4,7 +4,7 @@ import app.coordinates.Coordinates;
 
 public class WeatherProvider {
     private static WeatherProvider instance;
-    
+
     private static String[] weather = {"SUN", "RAIN", "FOG", "SNOW"};
 
     private WeatherProvider() {}
@@ -21,9 +21,9 @@ public class WeatherProvider {
     }
 
     public String getCurrentWeather(Coordinates p_coordinates) {
-        int lat = p_coordinates.getLatitude();
-        int lon = p_coordinates.getLongitude();
-        int hgt = p_coordinates.getHeight();
-        return weather[(int)(cantor(cantor(lat, lon), hgt)) % 4];
+        long lat = p_coordinates.getLatitude();
+        long lon = p_coordinates.getLongitude();
+        long hgt = p_coordinates.getHeight();
+        return weather[Math.abs((int)(cantor(cantor(lat, lon), hgt))) % 4];
     }
 }

@@ -45,7 +45,8 @@ public class Aircraft extends Flyable implements Runnable {
 
     @Override
     public void updateConditions() {
-        System.out.println(id + " " + name + " is updating conditions based on weather.");
+        String weather = weatherTower.getWeather(coordinates);
+        System.out.println(id + " " + name + " is updating conditions based on weather: " + weather);
     }
 
     @Override
