@@ -9,4 +9,21 @@ public class Baloon extends Aircraft {
         super(id, p_name, p_coordinates);
         this.type = "Baloon";
     }
+
+    private void sun() {
+        this.longitude += 2;
+        this.height += 4;
+    }
+
+    private void rain() {
+        this.height -= 5;
+    }
+
+    private void fog() {
+        this.height -= 3;
+    }
+
+    private void snow() {
+        this.height -= 15;
+    }
 }

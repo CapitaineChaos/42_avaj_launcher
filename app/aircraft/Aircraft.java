@@ -27,6 +27,12 @@ public class Aircraft extends Flyable implements Runnable {
         return id;
     }
 
+    private void setCoordinates(int d_lat, int d_lon, int d_hgt) {
+        this.coordinates.setLatitude(this.coordinates.getLatitude() + d_lat);
+        this.coordinates.setLongitude(this.coordinates.getLongitude() + d_lon);
+        this.coordinates.setHeight(this.coordinates.getHeight() + d_hgt);
+    }
+
     public Coordinates getCoordinates() {
         return coordinates;
     }
