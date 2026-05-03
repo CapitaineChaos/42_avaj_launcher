@@ -1,8 +1,10 @@
 package app.aircraft;
 
 import app.coordinates.Coordinates;
+import app.tower.WeatherTower;
 
 public class Aircraft extends Flyable implements Runnable {
+    protected String type;
     protected String name;
     protected long id;
     protected Coordinates coordinates;
@@ -11,7 +13,10 @@ public class Aircraft extends Flyable implements Runnable {
         this.name = p_name;
         this.id = p_id;
         this.coordinates = p_coordinates;
-        System.out.println("Aircraft " + name + " created with coordinates: " + coordinates);
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getName() {
@@ -24,6 +29,18 @@ public class Aircraft extends Flyable implements Runnable {
 
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+
+    @Override
+    public void registerTower(WeatherTower p_tower) {
+        this.weatherTower = p_tower;
+        this.weatherTower.register(this);
+    }
+
+    @Override
+    public void unregisterTower() {
+        this.weatherTower.unregister(this);
+        this.weatherTower = null;
     }
 
     @Override

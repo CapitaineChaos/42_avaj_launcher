@@ -27,7 +27,8 @@ public class Scenario {
             AircraftFactory factory = AircraftFactory.getInstance();
 
             for (AircraftData aircraft : aircrafts) {
-                factory.newAircraft(aircraft.type(), aircraft.name(), Coordinates.createCoordinates(aircraft.longitude(), aircraft.latitude(), aircraft.height()));
+                Aircraft newAircraft = factory.newAircraft(aircraft.type(), aircraft.name(), Coordinates.createCoordinates(aircraft.longitude(), aircraft.latitude(), aircraft.height()));
+                newAircraft.registerTower(weatherTower);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());   

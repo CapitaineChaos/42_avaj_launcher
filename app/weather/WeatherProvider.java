@@ -16,8 +16,14 @@ public class WeatherProvider {
         return instance;
     }
 
-    // W=f(φ,λ,h)
+    private long cantor(long a, long b) {
+        return ((a + b) * (a + b + 1)) / 2 + b;
+    }
+
     public String getCurrentWeather(Coordinates p_coordinates) {
-        return weather[(int) (Math.random() * weather.length)];
+        int lat = p_coordinates.getLatitude();
+        int lon = p_coordinates.getLongitude();
+        int hgt = p_coordinates.getHeight();
+        return weather[(int)(cantor(cantor(lat, lon), hgt)) % 4];
     }
 }

@@ -7,5 +7,6 @@ public class Baloon extends Aircraft {
 
     public Baloon(long id, String p_name, Coordinates p_coordinates) {
         super(id, p_name, p_coordinates);
+        this.type = "Baloon";
     }
 }
