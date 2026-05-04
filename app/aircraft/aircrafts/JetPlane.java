@@ -13,9 +13,9 @@ public class JetPlane extends Aircraft {
         this.type = "JetPlane";
 
         this.weatherDeltas = Map.of(
-            "SUN", Coordinates.createCoordinates(10, 0, 2),
-            "RAIN", Coordinates.createCoordinates(5, 0, 0),
-            "FOG", Coordinates.createCoordinates(1, 0, 0),
+            "SUN", Coordinates.createCoordinates(0, 10, 2),
+            "RAIN", Coordinates.createCoordinates(0, 5, 0),
+            "FOG", Coordinates.createCoordinates(0, 1, 0),
             "SNOW", Coordinates.createCoordinates(0, 0, -7)
         );
         

@@ -13,10 +13,10 @@ public class Drone extends Aircraft {
         this.type = "Drone";
 
         this.weatherDeltas = Map.of(
-            "SUN", Coordinates.createCoordinates(5, 0, 5),
+            "SUN", Coordinates.createCoordinates(5, 1, 5),
             "RAIN", Coordinates.createCoordinates(0, 0, -10),
             "FOG", Coordinates.createCoordinates(3, 2, 0),
-            "SNOW", Coordinates.createCoordinates(0, 0, -20)
+            "SNOW", Coordinates.createCoordinates(0, 1, -20)
         );
         
         this.messages = Map.of(

@@ -13,12 +13,12 @@ public class Baloon extends Aircraft {
         this.type = "Baloon";
 
         this.weatherDeltas = Map.of(
-            "SUN", Coordinates.createCoordinates(0, 2, 4),
+            "SUN", Coordinates.createCoordinates(2, 0, 4),
             "RAIN", Coordinates.createCoordinates(0, 0, -5),
             "FOG", Coordinates.createCoordinates(0, 0, -3),
             "SNOW", Coordinates.createCoordinates(0, 0, -15)
         );
-        
+
         this.messages = Map.of(
             "SUN", "Let's enjoy the good weather and take some pics.",
             "RAIN", "Damn you rain! You messed up my baloon.",
