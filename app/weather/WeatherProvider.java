@@ -2,6 +2,7 @@ package app.weather;
 
 import app.coordinates.Coordinates;
 
+
 public class WeatherProvider {
     private static WeatherProvider instance;
 
@@ -26,4 +27,5 @@ public class WeatherProvider {
         long hgt = p_coordinates.getHeight();
         return weather[Math.abs((int)(cantor(cantor(lat, lon), hgt))) % 4];
     }
+
 }

@@ -1,9 +1,11 @@
 package app.aircraft;
 
 import app.coordinates.Coordinates;
+import app.aircraft.Messages;
 import app.tower.WeatherTower;
+import app.log.Logger;
 
-public class Aircraft extends Flyable implements Runnable {
+public class Aircraft extends Flyable {
     protected String type;
     protected String name;
     protected long id;
@@ -27,12 +29,6 @@ public class Aircraft extends Flyable implements Runnable {
         return id;
     }
 
-    private void setCoordinates(int d_lat, int d_lon, int d_hgt) {
-        this.coordinates.setLatitude(this.coordinates.getLatitude() + d_lat);
-        this.coordinates.setLongitude(this.coordinates.getLongitude() + d_lon);
-        this.coordinates.setHeight(this.coordinates.getHeight() + d_hgt);
-    }
-
     public Coordinates getCoordinates() {
         return coordinates;
     }
@@ -49,14 +45,31 @@ public class Aircraft extends Flyable implements Runnable {
         this.weatherTower = null;
     }
 
-    @Override
-    public void updateConditions() {
-        String weather = weatherTower.getWeather(coordinates);
-        System.out.println(id + " " + name + " is updating conditions based on weather: " + weather);
+    private void updateCoordinates(Coordinates change) {
+        this.coordinates.setLatitude(this.coordinates.getLatitude() + change.getLatitude());
+        this.coordinates.setLongitude(this.coordinates.getLongitude() + change.getLongitude());
+        int newHeight = this.coordinates.getHeight() + change.getHeight();
+        if (newHeight > 100) {
+            this.coordinates.setHeight(100);
+            Logger.getInstance().logLine("[" + this.type + "#" + this.name + "(" + this.id + ")]: Height capped at 100");
+        } else if (newHeight <= 0) {
+            this.coordinates.setHeight(0);
+            Logger.getInstance().logLine("[" + this.type + "#" + this.name + "(" + this.id + ")]: Landing at " + coordinates);
+            Logger.getInstance().writeLine(this.type + "#" + this.name + "(" + this.id + ") landing at: " + coordinates);
+            unregisterTower();
+        } else {
+            this.coordinates.setHeight(newHeight);
+        }
+        Logger.getInstance().logLine("[" + this.type + "#" + this.name + "(" + this.id + ")]: Current coordinates    " + coordinates);
+        Logger.getInstance().logLine("[" + this.type + "#" + this.name + "(" + this.id + ")]: Coordinates changed by " + change);
+        Logger.getInstance().logLine("[" + this.type + "#" + this.name + "(" + this.id + ")]: Updated coordinates to " + coordinates);
     }
 
     @Override
-    public void run() {
-        System.out.println(id + " " + name + " is flying at coordinates: " + coordinates);
+    public void updateConditions() {
+        String weather = weatherTower.getWeather(coordinates);
+        Logger.getInstance().logLine("[" + this.type + "#" + this.name + "(" + this.id + ")]: Current weather is " + weather);
+        Logger.getInstance().writeLine(this.type + "#" + this.name + "(" + this.id + "): " + messages.get(weather));
+        updateCoordinates(weatherDeltas.get(weather));
     }
 }

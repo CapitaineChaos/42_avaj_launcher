@@ -4,8 +4,7 @@ import app.coordinates.Coordinates;
 import app.aircraft.aircrafts.*;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class AircraftFactory {
     private static AircraftFactory instance;
@@ -20,8 +19,15 @@ public class AircraftFactory {
 
     private AircraftFactory() {}
 
-    public Aircraft newAircraft(String p_type, String p_name, Coordinates p_coordinates) throws Exception {
-        Class<?> rawClass = Class.forName(AIRCRAFT_PACKAGE + p_type);
+    public Aircraft newAircraft(String p_type, String p_name, Coordinates p_coordinates) throws AircraftUnknownException, ReflectiveOperationException {
+        Class<?> rawClass;
+
+        try {
+            rawClass = Class.forName(AIRCRAFT_PACKAGE + p_type);
+        } catch (ClassNotFoundException e) {
+            throw new AircraftUnknownException("Unknown aircraft type: " + p_type);
+        }
+
         if (!Aircraft.class.isAssignableFrom(rawClass)) {
             throw new AircraftUnknownException("Unknown aircraft type: " + p_type);
         }

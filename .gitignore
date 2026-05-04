@@ -1,5 +1,6 @@
 *.class
 
 sources.txt
-
+simulation.txt
+*.log
 .vscode

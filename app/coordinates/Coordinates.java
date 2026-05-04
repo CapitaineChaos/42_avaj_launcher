@@ -23,6 +23,18 @@ public class Coordinates {
         return height;
     }
 
+    public void setLongitude(int longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(int latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public static Coordinates createCoordinates(int longitude, int latitude, int height) {
         return new Coordinates(longitude, latitude, height);
     }

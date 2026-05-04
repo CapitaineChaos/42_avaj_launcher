@@ -1,28 +1,36 @@
 package app.simulator;
 
-// import app.parser.ScenarioParser;
 import app.parser.ScenarioFile;
+import app.parser.dto.*;
 import app.tower.WeatherTower;
 import app.tower.Tower;
 import app.aircraft.AircraftFactory;
 import app.coordinates.Coordinates;
 import app.aircraft.Aircraft;
-import java.util.List;
+import app.log.Logger;
 
-import app.parser.dto.*;
+import java.util.List;
+import java.nio.file.Path;
+
 
 public class Scenario {
     public static void main(String[] args) {
 
+        if (args.length != 1) {
+            System.out.println("Usage: java Scenario <scenario_file_path>");
+            return;
+        }
+
+
         try {
-            ScenarioFile scenarioFile = new ScenarioFile("docs/scenario.txt");
+            Logger.init(Path.of("simulation.txt"), Path.of("simulation.log"));
+            
+            ScenarioFile scenarioFile = new ScenarioFile(args[0]);
 
             int simulations = scenarioFile.simulations();
             List<AircraftData> aircrafts = scenarioFile.data().aircrafts();
 
             WeatherTower weatherTower = new WeatherTower();
-            String weather = weatherTower.getWeather(Coordinates.createCoordinates(10, 20, 30));
-            System.out.println("Current weather: " + weather);
 
             AircraftFactory factory = AircraftFactory.getInstance();
 
@@ -32,12 +40,18 @@ public class Scenario {
             }
 
             for (int i = 0; i < simulations; i++) {
-                System.out.println("---------------- Simulation step " + (i + 1) + " ----------------");
+                if (weatherTower.getRegisteredFlyables().isEmpty()) {
+                    Logger.getInstance().logLine("\n---------------- No more flyables registered. Ending simulation at step [" + (i + 1) + "] ----------------\n");
+                    break;
+                }
+                Logger.getInstance().logLine("\n---------------- Simulation step [" + (i + 1) + "] ----------------\n");
                 weatherTower.changeWeather();
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());   
+        } finally {
+            Logger.getInstance().close();
         }
     }
 }

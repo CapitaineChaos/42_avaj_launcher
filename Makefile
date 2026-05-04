@@ -5,6 +5,8 @@ JAVAC   := $(JDK_DIR)/bin/javac
 export JAVA_HOME := $(JDK_DIR)
 export PATH := $(JDK_DIR)/bin:$(PATH)
 
+SCENARIO_FILE := docs/scenario.txt
+
 all: install_jdk compile run
 
 install_jdk:
@@ -21,10 +23,13 @@ compile:
 	@$(JAVAC) @sources.txt
 
 run:
-	@$(JAVA) app.simulator.Scenario
+	@$(JAVA) app.simulator.Scenario $(SCENARIO_FILE)
 
 clean:
+	@rm -f simulation.*
 	@find . -name "*.class" -delete
 	@rm -f sources.txt
 
-.PHONY: install_jdk compile run clean
+re: clean all
+
+.PHONY: install_jdk compile run clean re
