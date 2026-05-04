@@ -24,7 +24,7 @@ public class Scenario {
 
         try {
             Logger.init(Path.of("simulation.txt"), Path.of("simulation.log"));
-            
+
             ScenarioFile scenarioFile = new ScenarioFile(args[0]);
 
             int simulations = scenarioFile.simulations();
@@ -49,9 +49,11 @@ public class Scenario {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());   
+            System.out.println(e.getMessage());
         } finally {
-            Logger.getInstance().close();
+            try {
+                Logger.getInstance().close();
+            } catch (Exception ignored) {}
         }
     }
 }

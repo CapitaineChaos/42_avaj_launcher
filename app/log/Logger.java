@@ -21,7 +21,7 @@ public final class Logger {
                 StandardOpenOption.WRITE
             );
         } catch (IOException e) {
-            throw new RuntimeException("Failed to create new writer: " + e.getMessage(), e);
+            throw new LoggerException("Failed to create new writer: " + e.getMessage(), e);
         }
     }
 
@@ -33,7 +33,7 @@ public final class Logger {
 
     public static Logger init(Path log_path, Path debug_path) {
         if (instance != null) {
-            throw new IllegalStateException("Logger has already been initialized.");
+            throw new LoggerUsageException("Logger has already been initialized.");
         }
         instance = new Logger(log_path, debug_path);
         return instance;
@@ -41,7 +41,7 @@ public final class Logger {
 
     public static Logger getInstance() {
         if (instance == null) {
-            throw new IllegalStateException("Logger has not been initialized. Call Logger.init(Path, Path) first.");
+            throw new LoggerUsageException("Logger has not been initialized. Call Logger.init(Path, Path) first.");
         }
         return instance;
     }
@@ -52,7 +52,7 @@ public final class Logger {
             debug.newLine();
             debug.flush();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to write debug message: " + e.getMessage(), e);
+            throw new LoggerException("Failed to write debug message: " + e.getMessage(), e);
         }
     }
 
@@ -62,7 +62,7 @@ public final class Logger {
             writer.newLine();
             writer.flush();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to write log message: " + e.getMessage(), e);
+            throw new LoggerException("Failed to write log message: " + e.getMessage(), e);
         }
     }
 
@@ -71,7 +71,7 @@ public final class Logger {
             writer.close();
             debug.close();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to close logger: " + e.getMessage(), e);
+            throw new LoggerException("Failed to close logger: " + e.getMessage(), e);
         }
     }
 }

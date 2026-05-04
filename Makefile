@@ -5,7 +5,7 @@ JAVAC   := $(JDK_DIR)/bin/javac
 export JAVA_HOME := $(JDK_DIR)
 export PATH := $(JDK_DIR)/bin:$(PATH)
 
-SCENARIO_FILE := docs/scenario.txt
+SCENARIO_FILE := data/scenario.txt
 
 all: install_jdk compile run
 
